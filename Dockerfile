@@ -1,7 +1,7 @@
 # Builder
-FROM arm64v8/golang as builder
+FROM golang as builder
 
-MAINTAINER Joshua Noakes <joshua@joshuanoakes.co.uk> (https://joshuanoakes.co.uk)
+LABEL org.opencontainers.image.authors="joshua@joshuanoakes.co.uk"
 
 ENV CADVISOR_VERSION "v0.38.8"
 
@@ -14,9 +14,9 @@ WORKDIR /go/src/github.com/google/cadvisor
 RUN make build
 
 # Image for usage
-FROM arm64v8/debian
+FROM golang
 
-MAINTAINER Joshua Noakes <joshua@joshuanoakes.co.uk> (https://joshuanoakes.co.uk)
+LABEL org.opencontainers.image.authors="joshua@joshuanoakes.co.uk"
 
 COPY --from=builder /go/src/github.com/google/cadvisor/cadvisor /usr/bin/cadvisor
 

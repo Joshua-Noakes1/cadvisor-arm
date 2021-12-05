@@ -1,32 +1,25 @@
-# cAdvisor ARM build
+# cAdvisor ARM and PC build
 
-cAdvisor docker image build for ARM devices (for example: Raspberry PI).
+cAdvisor docker image build for ARM and PC devices (AMD64 64BIT PCs, i386 32BIT PCs, ARMv7 Raspberry PI, ARM64 64Bit ARM Devices).
 
 This package is based on official [google/cadvisor](https://github.com/google/cadvisor)
 
 ## Content
 
-* [How it works](#how-it-works)
-* [How to use](#how-to-use)
-  * [Docker](#docker)
-  * [Custom build](#custom-build)
+- [How it works](#how-it-works)
+- [How to use](#how-to-use)
+  - [Docker](#docker)
+  - [Custom build](#custom-build)
 
 ## How it works
 
-This package compile official [google/cadvisor](https://github.com/google/cadvisor) package on Raspberry PI with `arm32v7/golang` docker image and build [google/cadvisor](https://github.com/google/cadvisor) as `arm32v6/alpine` image.
+This package compile official [google/cadvisor](https://github.com/google/cadvisor) package on AMD64, i386, linux/arm64, linux/arm/v7 with `golang` docker image.
 
 ## How to use
 
 ### With Docker
 
 #### Supported tags and respective `Dockerfile` links
-
-**NOTE:** Tag corresponds to the version of cAdvisor
-
-* `0.30.2`, `latest` - [(Dockerfile)](https://github.com/Budry/cadvisor-arm/blob/v0.30.2/Dockerfile)
-* `0.29.0` - [(Dockerfile)](https://github.com/Budry/cadvisor-arm/blob/v0.29.0/Dockerfile)
-* `0.28.3` - [(Dockerfile)](https://github.com/Budry/cadvisor-arm/blob/v0.28.3/Dockerfile)
-
 
 The best (and recommended) way how to use this package is as [Docker image](https://hub.docker.com/r/budry/cadvisor-arm/).
 
@@ -40,7 +33,7 @@ docker run \
   --publish=8080:8080 \
   --detach=true \
   --name=cadvisor \
-  budry/cadvisor-arm:latest
+  ghcr.io/joshua-noakes1/cadvisor-arm
 ```
 
 I trying update build of this package as soon as possible for each [google/cadvisor](https://github.com/google/cadvisor) update, but when you need more actual version I recommend you use custom build.
@@ -48,11 +41,11 @@ I trying update build of this package as soon as possible for each [google/cadvi
 ### Docker Compose Example
 
 ```yml
-version: '3'
+version: "3"
 
 services:
   cadvisor:
-    image: budry/cadvisor-arm
+    image: ghcr.io/joshua-noakes1/cadvisor-arm
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -68,7 +61,7 @@ services:
 Or you can use custom build on your ARM (Raspberry PI) device.
 
 ```shell
-git clone git@github.com:Budry/cadvisor-arm.git
+git clone git@github.com:Joshua-Noakes1/cadvisor-arm.git
 cd cadvisor-arm
 docker build -t <image name> .
 docker run \
@@ -82,5 +75,3 @@ docker run \
   --name=cadvisor \
   <image name>:<image tag>
 ```
-
-**IMPORTANT NOTE: Build must be only on ARM device. On x86/x64 CPU not work!**
